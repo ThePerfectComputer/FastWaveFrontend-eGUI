@@ -50,16 +50,28 @@ impl ScopeView {
     }
     fn draw_all_scopes(&self, ui: &mut egui::Ui) {
         for root_scope_idx in self.vcd.root_scopes_by_idx() {
-            self.draw_root_scope_view(root_scope_idx, ui);
+            let name = self.vcd.scope_name_by_idx(root_scope_idx);
+            let ScopeIdx(idx) = root_scope_idx;
+            if self.vcd.child_scopes_by_idx(root_scope_idx).is_empty() {
+                ui.label(name);
+            }
+            else {
+                egui::CollapsingHeader::new(name)
+                    .id_source(idx)
+                    .show(ui, |ui| {
+                        self.draw_root_scope_view(root_scope_idx, ui);
+                    });
+            }
         }
     }
     fn draw_root_scope_view(&self, root_idx: ScopeIdx, ui: &mut egui::Ui) {
-        if self.vcd.child_scopes_by_idx(root_idx).is_empty() {
-            ui.label("Placeholder");
-        } else {
-            for child_scope_idx in self.vcd.child_scopes_by_idx(root_idx) {
-                let name = self.vcd.scope_name_by_idx(child_scope_idx);
-                let ScopeIdx(idx) = child_scope_idx;
+        for child_scope_idx in self.vcd.child_scopes_by_idx(root_idx) {
+            let name = self.vcd.scope_name_by_idx(child_scope_idx);
+            let ScopeIdx(idx) = child_scope_idx;
+            if self.vcd.child_scopes_by_idx(child_scope_idx).is_empty() {
+                ui.label(name);
+            }
+            else {
                 egui::CollapsingHeader::new(name)
                     .id_source(idx)
                     .show(ui, |ui| {
