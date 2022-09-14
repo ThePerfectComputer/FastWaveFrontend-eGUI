@@ -1,0 +1,6 @@
+[submodule "FastWave"]
+	path = FastWave
+	url = git@github.com:ThePerfectComputer/FastWave.git
+[submodule "FastWaveBackend"]
+	path = FastWaveBackend
+	url = git@github.com:ThePerfectComputer/FastWaveBackend.git
