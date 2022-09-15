@@ -5,6 +5,8 @@
 
 use std::rc::Rc;
 
+use egui::style;
+
 pub struct SignalSelect {
     vcd: Rc<fastwave_backend::VCD>,
     selected_module: fastwave_backend::ScopeIdx,
@@ -18,10 +20,10 @@ impl SignalSelect {
         }
     }
     pub fn draw(&mut self, ctx: &egui::Context) {
+        let max_width = 400.0;
         egui::SidePanel::left("signal select left panel")
-            .resizable(true)
-            .default_width(175.0)
-            .width_range(100.0..=400.0)
+            .default_width(300.)
+            .width_range(100.0..=max_width)
             .show(ctx, |ui| {
                 ui.with_layout(
                     egui::Layout::top_down(egui::Align::Center).with_cross_justify(true),
@@ -33,7 +35,9 @@ impl SignalSelect {
                 ui.with_layout(
                     egui::Layout::top_down(egui::Align::LEFT).with_cross_justify(true),
                     |ui| {
-                        egui::ScrollArea::vertical().show(ui, |ui| {
+                        egui::ScrollArea::both()
+                        .show(ui, |ui| {
+                            ui.style_mut().wrap = Some(false);
                             self.draw_all_scopes(ui);
                         });
                     },
