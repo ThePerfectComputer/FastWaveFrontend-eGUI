@@ -20,6 +20,8 @@ impl VCDViewer {
 
 impl eframe::App for VCDViewer {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        ctx.set_visuals(egui::Visuals::light());
+
         self.signal_select.draw(ctx);
 
         egui::CentralPanel::default().show(ctx, |ui| {
