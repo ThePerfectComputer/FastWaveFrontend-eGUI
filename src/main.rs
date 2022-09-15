@@ -15,8 +15,8 @@ fn main() -> std::io::Result<()> {
     // set default window size
     let mut options = eframe::NativeOptions::default();
     options.initial_window_size = Some(egui::emath::Vec2 {
-        x: 300f32,
-        y: 500f32,
+        x: 640.0,
+        y: 480.0,
     });
 
     eframe::run_native(
