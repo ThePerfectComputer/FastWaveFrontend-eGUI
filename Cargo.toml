@@ -7,6 +7,10 @@ edition = "2021"
 
 [dependencies]
 fastwave_backend = { path = "./FastWaveBackend" }
+# egui_extras = {path = "../egui/crates/egui_extras"}
+# eframe = {path = "../egui/crates/eframe"}
+# egui = {path = "../egui/crates/egui"}
+# epaint = {path = "../egui/crates/epaint"}
 egui_extras = { git = "https://github.com/emilk/egui/", rev = "e0c7533ede5" }
 eframe = { git = "https://github.com/emilk/egui/", rev = "e0c7533ede5" }
 egui   = { git = "https://github.com/emilk/egui/", rev = "e0c7533ede5" }

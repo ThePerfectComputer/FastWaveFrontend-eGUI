@@ -3,9 +3,12 @@
 // or modified under any circumstance except with explicit permission
 // from Yehowshua Immanuel.
 
+use std::cell::RefCell;
 use std::rc::Rc;
 
 use egui::style;
+
+use crate::theme;
 
 pub struct SignalSelect {
     vcd: Rc<fastwave_backend::VCD>,
@@ -19,8 +22,15 @@ impl SignalSelect {
             selected_module: fastwave_backend::ScopeIdx(0),
         }
     }
-    pub fn draw(&mut self, ctx: &egui::Context) {
+    pub fn draw(&mut self, ctx: &egui::Context, theme_manager: &theme::ThemeManager) {
         let max_width = 400.0;
+        let window_round = epaint::Rounding::same(20.);
+
+        let fill = if false {
+            egui::Color32::from_rgba_premultiplied(0, 0, 0, 100)
+        } else {
+            egui::Color32::from_rgba_premultiplied(0, 0, 0, 25)
+        };
         egui::SidePanel::left("signal select left panel")
             .default_width(300.)
             .width_range(100.0..=max_width)
@@ -32,16 +42,17 @@ impl SignalSelect {
                         ui.add_space(3.0);
                     },
                 );
-                ui.with_layout(
-                    egui::Layout::top_down(egui::Align::LEFT).with_cross_justify(true),
-                    |ui| {
-                        egui::ScrollArea::both()
-                        .show(ui, |ui| {
-                            ui.style_mut().wrap = Some(false);
-                            self.draw_all_scopes(ui);
-                        });
-                    },
-                );
+                theme_manager.new_frame().show(ui, |ui| {
+                    ui.with_layout(
+                        egui::Layout::top_down(egui::Align::LEFT).with_cross_justify(true),
+                        |ui| {
+                            egui::ScrollArea::both().show(ui, |ui| {
+                                ui.style_mut().wrap = Some(false);
+                                self.draw_all_scopes(ui);
+                            });
+                        },
+                    );
+                });
             });
     }
     fn draw_all_scopes(&mut self, ui: &mut egui::Ui) {

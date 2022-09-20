@@ -7,6 +7,7 @@ use std::fs::File;
 use std::rc::Rc;
 
 mod signal_select;
+mod theme;
 mod vcd_viewer;
 
 fn main() -> std::io::Result<()> {
@@ -14,10 +15,7 @@ fn main() -> std::io::Result<()> {
 
     // set default window size
     let mut options = eframe::NativeOptions::default();
-    options.initial_window_size = Some(egui::emath::Vec2 {
-        x: 640.0,
-        y: 480.0,
-    });
+    options.initial_window_size = Some(egui::emath::Vec2 { x: 640.0, y: 480.0 });
 
     eframe::run_native(
         "FastWave",
