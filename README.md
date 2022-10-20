@@ -1,7 +1,7 @@
 # About
 
 The beginnings of a proprietary waveform viewer written in Rust.
-Abandoning eGUI in favor of Tauri.
+I'm now abandoning eGUI in favor of Tauri due to some limitations of Egui.
 
 # Running
 
